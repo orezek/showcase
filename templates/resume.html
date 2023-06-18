@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{website_metadata["page_title"]}}
+{% endblock %}
+
+{% block main %}
+
+
+<!-- main container wrapper -->
+<div class="container" id="main-wrapper">
+    <!-- row image wrapper -->
+    <div class="row" id="image-wrapper">
+        <img alt="..." class="img-fluid px-0" id="main-image" src="static/assets/me.jpeg">
+        <!-- text in image wrapper -->
+        <div class="container" id="name-in-image">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="name-in-image">
+                        <h4 class="d-none d-sm-block">{{user_data["user_miscellaneous"]["greeting"]}}</h4>
+                        <h1>{{user_data["user_info"]["user_full_name"]["name"]}}
+                            {{user_data["user_info"]["user_full_name"]["surname"]}}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <!-----end of text wrapper------->
+        </div>
+    </div>
+    <!---------end of image wrapper------>
+    <!-- left column -->
+    <div class="row flex-column-reverse flex-md-row">
+        <div class="col-md-4" id="left-col-wrapper">
+            <!-- contacts section -->
+            <div class="contacts">
+                <h2>{{ website_metadata["contacts"] }}</h2>
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <td scope="col"><img alt="phone" class="icon" class="img-fluid img-thumbnail" id="phone"
+                                                 src="{{url_for('static', filename='assets/telephone.png')}}"></td>
+                            <td scope="col"><p><b><kbd>{{user_data["user_info"]["user_contacts"]["phone_no_cz"]}}</kbd></b>
+                            </p>
+                        </tr>
+                        <tr>
+                            <td scope="col"><a href="mailto:{{user_data['user_info']['user_contacts']['email']}}"><img
+                                    alt="email" class="icon"
+                                    class="img-fluid img-thumbnail mx-auto"
+                                    id="email"
+                                    src="{{url_for('static', filename='assets/email.png')}}"></a>
+                            </td>
+                            <td scope="col"><a href="mailto:{{user_data['user_info']['user_contacts']['email']}}"><p><b><kbd>
+                                {{user_data["user_info"]["user_contacts"]["email"]}}</kbd></b></b>
+                            </p></a></td>
+                        </tr>
+                        <tr>
+                            <td scope="col"><a href="{{user_data['user_info']['user_contacts']['linkedin']}}"
+                                               target=”_blank”><img
+                                    alt="linkedin" class="icon" class="img-fluid img-thumbnail mx-auto"
+                                    id="linkedin" src="{{url_for('static', filename='assets/linkedin.png')}}"></a>
+                            </td>
+                            <td scope="col"><a href="{{user_data['user_info']['user_contacts']['linkedin']}}"
+                                               target=”_blank”><p><b><kbd>{{ website_metadata["linkedin"] }}</kbd></b>
+                            </p></a></td>
+                        </tr>
+                        <tr>
+                            <td scope="col">
+                                <a href="{{user_data['user_info']['user_contacts']['github']}}" target=”_blank”><img
+                                        alt="github" class="icon"
+                                        class="img-fluid img-thumbnail mx-auto"
+                                        id="github"
+                                        src="{{ url_for('static', filename='assets/github.png')}}"></a>
+                            </td>
+                            <td scope="col"><a href="{{user_data['user_info']['user_contacts']['github']}}"
+                                               target=”_blank”><p><b><kbd>{{
+                                website_metadata["github"] }}</kbd></b>
+                            </p></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- skills section -->
+            <div class="skills">
+                <h2>{{ website_metadata["skills"] }}</h2>
+                <!-- temp buttons to reset and load skill values -->
+                <button class="d-none" onclick="skills()">Load Skills</button>
+                <button class="d-none" onclick="setWidth()">Reset Skills</button>
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                        {% for key, value in user_data["skills"].items()%}
+                        <tr>
+                            <td scope="col"><label for="prg-outer{{value}}"><kbd>{{ key }}</kbd></label></td>
+                            <td scope="col">
+                                <div class="progress" id="prg-outer{{value}}">
+                                    <div class="progress-bar" id="{{ key }}"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- certification section -->
+            <div class="certification">
+                <h2>{{ website_metadata["certifications"] }}</h2>
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <td scope="col"><a
+                                href="{{user_data['certification']['aws_dev']}}"><img
+                                alt="..."
+                                class="img-fluid img thumbnail mx-auto"
+                                src="{{url_for('static', filename='assets/aws-certified-developer-associate.png')}}"></a>
+                        </td>
+                        <td scope="col"><a
+                                href="{{user_data['certification']['aws_arch']}}"><img
+                                alt="..."
+                                class="img-fluid img thumbnail mx-auto"
+                                src="{{url_for('static', filename='assets/aws-certified-solutions-architect-associate.png')}}"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="col"><a
+                                href="{{user_data['certification']['aws_fond']}}"><img
+                                alt="..."
+                                class="img-fluid img thumbnail mx-auto"
+                                id="aws-badge-dev"
+                                src="{{url_for('static', filename='assets/aws-certified-cloud-practitioner.png')}}"></a>
+                        </td>
+                        <td scope="col"><a
+                                href="{{user_data['certification']['aws_fond']}}"><img
+                                alt="..."
+                                class="img-fluid img thumbnail mx-auto"
+                                id="cisco-ccna"
+                                src="{{url_for('static', filename='assets/cisco-ccna.png')}}"></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- education section -->
+            <div class="education">
+                <h2>{{ website_metadata["education"] }}</h2>
+                <p>{{ user_data["education"]["field"] }} - {{user_data["education"]["institution"]}}</p>
+            </div>
+            <!-- interests section -->
+            <div class="interests">
+                <h2>{{ website_metadata["interests"] }}</h2>
+                <ul>
+                    {% for interest in user_data["interests"] %}
+                    <li>{{interest}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <!-- right column -->
+        <!-- user introduction section -->
+        <div class="col-md-8" id="right-col-wrapper">
+            <div class="introduction">
+                <h2 id="principal_about">{{user_data["user_miscellaneous"]["whoami"]}}</h2>
+                <hr class="dashed>">
+                <h4 id="principal_bio">
+                    Age:{{ user_data["user_info"]["user_bio"]["age"]}} |
+                    Nationality: {{ user_data["user_info"]["user_bio"]["nationality"] | capitalize}} |
+                    Languages: {{ user_data["user_miscellaneous"]["languages"]["english"] | capitalize}},
+                    {{ user_data["user_miscellaneous"]["languages"]["czech"] | capitalize}}
+                </h4>
+            </div>
+            <!-- profile summary section -->
+            <hr class="dashed">
+            <div class="profile_summary">
+                <h1 id="profile_header">{{ website_metadata["about_me"] }}</h1>
+                <p id="profile_paragraph">{{ user_data["profile_info"]["profile_summary"] | safe }}</p>
+            </div>
+            <!-- work experience section -->
+            <hr class="dashed">
+            <div class="work_experience">
+                <h1 id="work_ex_header">{{ website_metadata["work_experience"] }}</h1>
+                {% for key in user_data["work_experience"].keys() %}
+                <h2 class="job_title">{{user_data["work_experience"][key]["job_title"]}}</h2>
+                <h4 class="job_company">{{user_data["work_experience"][key]["job_company"]}}</h4>
+                <p class="job_description">{{user_data["work_experience"][key]["job_description"]}}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div> <!-- main container end -->
+{% endblock %}
